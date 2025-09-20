@@ -1,4 +1,5 @@
- let string = "";
+document.getElementById("year").textContent = new Date().getFullYear();
+let string = "";
 let buttons = document.querySelectorAll(".button");
 let display = document.querySelector("input"); // Define display once
 
@@ -19,12 +20,12 @@ Array.from(buttons).forEach((button) => {
       string += btn;
       display.value = string;
     }
-    if(btn == '='){
-      try{
+    if (btn == "=") {
+      try {
         string = eval(string);
         display.value = string;
-      }catch{
-        display.value = 'Error';
+      } catch {
+        display.value = "Error";
         string = "";
       }
     }
