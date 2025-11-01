@@ -1,50 +1,212 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Calculate Me!</title>
-    <link rel="stylesheet" type="text/css" href="style.css" />
-  </head>
-  <body>
-    <h1 class="head">Calculate with me!</h1>
-    <div class="container">
-      <input class="input" type="text" readonly />
-      <div class="row">
-        <button class="button grey-button">C</button>
-        <button class="button grey-button">BB</button>
-        <button class="button grey-button">%</button>
-        <button class="button yellow-button">/</button>
-      </div>
-      <div class="row">
-        <button class="button">7</button>
-        <button class="button">8</button>
-        <button class="button">9</button>
-        <button class="button yellow-button">*</button>
-      </div>
-      <div class="row">
-        <button class="button">4</button>
-        <button class="button">5</button>
-        <button class="button">6</button>
-        <button class="button yellow-button">-</button>
-      </div>
-      <div class="row">
-        <button class="button">3</button>
-        <button class="button">2</button>
-        <button class="button">1</button>
-        <button class="button yellow-button">+</button>
-      </div>
-      <div class="row">
-        <button class="button" id="zero">0</button>
-        <button class="button">.</button>
-        <button class="button yellow-button">=</button>
-      </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevLearn - Master Web Development</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <canvas id="particles"></canvas>
     </div>
-    <footer>
-      <div class="footer">
-        © <span id="year"></span> Avnish_Calculator • Built with HTML/CSS/JS
-      </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-text">Dev</span><span class="logo-accent">Learn</span>
+            </div>
+            <div class="nav-links">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#resources" class="nav-link">Resources</a>
+                <a href="#faq" class="nav-link">FAQ</a>
+                <button id="authBtn" class="btn-primary">Sign In</button>
+                <button id="logoutBtn" class="btn-secondary" style="display: none;">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Master Web Development</h1>
+            <p class="hero-subtitle">One Note at a Time.</p>
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-input" placeholder="Search for tutorials, notes, videos...">
+                <button class="search-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="user-welcome" id="userWelcome" style="display: none;">
+                <p>Welcome back, <span id="userName"></span>!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admin Upload Panel -->
+    <section id="adminPanel" class="admin-panel" style="display: none;">
+        <div class="container">
+            <div class="admin-card">
+                <h2 class="section-title">Admin Upload Panel</h2>
+                <div class="upload-form">
+                    <input type="text" id="resourceTitle" class="form-input" placeholder="Resource Title">
+                    <textarea id="resourceDesc" class="form-textarea" placeholder="Description"></textarea>
+                    <select id="resourceType" class="form-select">
+                        <option value="pdf">PDF Notes</option>
+                        <option value="video">Video Tutorial</option>
+                    </select>
+                    <button id="uploadBtn" class="btn-upload">Upload to Cloudinary</button>
+                    <div id="uploadStatus" class="upload-status"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Grid -->
+    <section id="resources" class="resources-section">
+        <div class="container">
+            <h2 class="section-title">Learning Resources</h2>
+            <div class="filter-tabs">
+                <button class="filter-tab active" data-filter="all">All</button>
+                <button class="filter-tab" data-filter="pdf">PDF Notes</button>
+                <button class="filter-tab" data-filter="video">Videos</button>
+            </div>
+            <div id="resourcesGrid" class="resources-grid">
+                <!-- Dynamic content will be loaded here -->
+                <div class="loading-spinner">
+                    <div class="spinner"></div>
+                    <p>Loading resources...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq-section">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How do I access the resources?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Simply sign up for a free account, browse through our collection of notes and videos, and click on any resource to view or download it. All resources are hosted securely on Cloudinary.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Are the resources free?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! All learning resources on DevLearn are completely free. Our mission is to make web development education accessible to everyone.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Can I upload my own resources?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Currently, only admin users can upload resources to maintain quality standards. If you'd like to contribute, please contact us through our social channels.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What topics are covered?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We cover a wide range of web development topics including HTML, CSS, JavaScript, React, Node.js, databases, APIs, and more. New resources are added regularly.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How often are new resources added?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We add new resources weekly. Follow us on social media or check back regularly to stay updated with the latest tutorials and notes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 class="footer-title">DevLearn</h3>
+                    <p class="footer-text">Built for Developers by Developers.</p>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-subtitle">Quick Links</h4>
+                    <a href="#home" class="footer-link">Home</a>
+                    <a href="#resources" class="footer-link">Resources</a>
+                    <a href="#faq" class="footer-link">FAQ</a>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-subtitle">Connect</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-link">GitHub</a>
+                        <a href="#" class="social-link">Twitter</a>
+                        <a href="#" class="social-link">Discord</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="year"></span> DevLearn. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
-    <script src="script.js"></script>
-  </body>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div class="modal-header">
+                <h2 id="modalTitle">Sign In</h2>
+                <div class="modal-tabs">
+                    <button class="modal-tab active" data-tab="signin">Sign In</button>
+                    <button class="modal-tab" data-tab="signup">Sign Up</button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <!-- Sign In Form -->
+                <form id="signinForm" class="auth-form">
+                    <input type="email" id="signinEmail" class="form-input" placeholder="Email" required>
+                    <input type="password" id="signinPassword" class="form-input" placeholder="Password" required>
+                    <button type="submit" class="btn-primary btn-full">Sign In</button>
+                    <div id="signinError" class="error-message"></div>
+                </form>
+                <!-- Sign Up Form -->
+                <form id="signupForm" class="auth-form" style="display: none;">
+                    <input type="text" id="signupName" class="form-input" placeholder="Full Name" required>
+                    <input type="email" id="signupEmail" class="form-input" placeholder="Email" required>
+                    <input type="password" id="signupPassword" class="form-input" placeholder="Password (min 6 characters)" required>
+                    <button type="submit" class="btn-primary btn-full">Sign Up</button>
+                    <div id="signupError" class="error-message"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cloudinary Upload Widget Script -->
+    <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+    
+    <!-- Main Script -->
+    <script type="module" src="script.js"></script>
+</body>
 </html>
